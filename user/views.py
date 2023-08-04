@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CreateUser
+from .models import User
+from django.contrib import messages
 
 # Create your views here.
 
@@ -11,11 +13,8 @@ def create(request):
         form = CreateUser(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            todo.objects.create(title=cd['title'], body=cd['body'], created_at=cd['created'])
+            User.objects.create(username=cd['username'], email=cd['email'], password=cd['password'])
             messages.success(request, 'todo was created successfully', 'success')
             return redirect('home')
-    form = TodoCreateForm()
+    form = CreateUser()
     return render(request, 'create.html', {'form':form})
-
-def update(request, todo_id):
-    pass
