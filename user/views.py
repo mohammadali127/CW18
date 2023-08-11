@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserRegistrationForm, UserLoginForm
+from .forms import UserRegistrationForm, UserLoginForm, UserCreationForm
 from .models import User, Task
 from django.contrib import messages
 from django.views import View
@@ -64,15 +64,21 @@ class UserProfileView(LoginRequiredMixin, View):
         return render(request, 'profile.html', {'tasks': tasks, 'user': user})
 
 class CreateTaskView(View):
-    if request.method == 'POST':
-        form = CreateUser(request.POST)
+    form_class = UserCreationForm
+    template_name = 'Create_task.html'
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            User.objects.create(username=cd['username'], email=cd['email'], password=cd['password'])
-            messages.success(request, 'todo was created successfully', 'success')
+            User.objects.create(cd['title'], cd['body'], cd['due_date'], cd['user'])
+            messages.success(request, 'you create a task successfully', 'success')
             return redirect('home')
-    form = CreateUser()
-    return render(request, 'create.html', {'form':form})
+        return render(request, self.template_name, {'form': form})
 
 class UpdateTaskView(View):
     pass

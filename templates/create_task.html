@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>Register User</h3>
+    <h3>Task Creation</h3>
 
     <form action="" method="post" novalidate>
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Register">
+        <input type="submit" value="Create A Task">
     </form>
 
 {% endblock %}

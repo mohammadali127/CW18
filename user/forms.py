@@ -1,10 +1,15 @@
 from django import forms
-from .models import User
+from .models import User, Task
 from django.core.exceptions import ValidationError
 
 class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
+        fields = '__all__'
+
+class UserCreationForm(forms.ModelForm):
+    class Meta:
+        model = Task
         fields = '__all__'
 
 class UserLoginForm(forms.Form):
