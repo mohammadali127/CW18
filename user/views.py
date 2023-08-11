@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserRegistrationForm, UserLoginForm
-from .models import User
+from .models import User, Task
 from django.contrib import messages
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
@@ -55,14 +55,14 @@ class UserLogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
         messages.success(request, 'you logged out successfully', 'success')
-        return redirect('home:home')
+        return redirect('home')
 
 
 class UserProfileView(LoginRequiredMixin, View):
     def get(self, request, user_id):
         user = get_object_or_404(User, pk=user_id)
-        posts = Post.objects.filter(user=user)
-        return render(request, 'account/profile.html', {'user': user, 'posts': posts})
+        tasks = Task.objects.filter(user=user)
+        return render(request, 'account/profile.html', {'tasks': tasks, 'posts': posts})
 
 class CreateTaskView(View):
     if request.method == 'POST':
