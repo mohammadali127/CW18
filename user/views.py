@@ -57,12 +57,11 @@ class UserLogoutView(LoginRequiredMixin, View):
         messages.success(request, 'you logged out successfully', 'success')
         return redirect('home')
 
-
 class UserProfileView(LoginRequiredMixin, View):
     def get(self, request, user_id):
         user = get_object_or_404(User, pk=user_id)
         tasks = Task.objects.filter(user=user)
-        return render(request, 'account/profile.html', {'tasks': tasks, 'posts': posts})
+        return render(request, 'profile.html', {'tasks': tasks, 'user': user})
 
 class CreateTaskView(View):
     if request.method == 'POST':
