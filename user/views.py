@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, UserLoginForm
 from .models import User
 from django.contrib import messages
 from django.views import View
@@ -31,12 +31,7 @@ class UserRegisterView(View):
 
 class UserLoginView(View):
     form_class = UserLoginForm
-    template_name = 'account/login.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('home:home')
-        return super().dispatch(request, *args, **kwargs)
+    template_name = 'login.html'
 
     def get(self, request):
         form = self.form_class

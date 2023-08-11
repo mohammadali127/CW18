@@ -7,3 +7,6 @@ class UserRegistrationForm(forms.ModelForm):
         model = User
         fields = '__all__'
 
+class UserLoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'enter your password'}))
