@@ -18,3 +18,5 @@ def create(request):
             return redirect('home')
     form = CreateUser()
     return render(request, 'create.html', {'form':form})
+
+def UpdateTaskView
